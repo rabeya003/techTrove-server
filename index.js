@@ -40,41 +40,12 @@ async function run() {
       const result = await techCollection.find(qurry).toArray();
       res.send(result);
     });
-    // GET for Brands
-    app.get("/brand", async (req, res) => {
-      const result = await brandCollection.find().toArray();
-      res.send(result);
-    });
 
     // POST
     app.post("/tech", async (req, res) => {
       const newCoffee = req.body;
       console.log(newCoffee);
       const result = await techCollection.insertOne(newCoffee);
-      res.send(result);
-    });
-
-    // PUT
-    app.put("/tech/:brand", async (req, res) => {
-      const Brand = req.params.brand;
-      const filter = { brand: Brand };
-      const options = { upsert: true };
-
-      const result = await coffeeCollection.updateOne(
-        filter,
-        {
-          $set: req.body,
-        },
-        options
-      );
-      res.send(result);
-    });
-
-    // Delete TECH
-    app.delete("/tech/:id", async (req, res) => {
-      const id = req.params.id;
-      const qurry = { _id: new ObjectId(id) };
-      const result = await techCollection.deleteOne(qurry);
       res.send(result);
     });
 
