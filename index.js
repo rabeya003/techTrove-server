@@ -33,13 +33,21 @@ async function run() {
       const result = await techCollection.find().toArray();
       res.send(result);
     });
-    // GER a specific _id for tech
+    // GER a specific Brand* for tech
     app.get("/tech/:brand", async (req, res) => {
       const Brand = req.params.brand;
       const qurry = { brand: Brand };
       const result = await techCollection.find(qurry).toArray();
       res.send(result);
     });
+    // GER a specific id* for tech
+    app.get("/tech/:id", async (req, res) => {
+      const id = req.params.id;
+      const qurry = { _id: new ObjectId(id) };
+      const result = await techCollection.findOne(qurry);
+      res.send(result);
+    });
+
     // GET for Brands
     app.get("/brand", async (req, res) => {
       const result = await brandCollection.find().toArray();
