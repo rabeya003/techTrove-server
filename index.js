@@ -23,7 +23,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
+    await client.connect();
     // Collection
     const techCollection = client.db("techTrove").collection("product");
     const brandCollection = client.db("techTrove").collection("brand");
@@ -40,9 +40,19 @@ async function run() {
       const result = await techCollection.find(qurry).toArray();
       res.send(result);
     });
-    // GER a specific id* for tech
-    app.get("/tech/:id", async (req, res) => {
+    // // GEt a specific id* for tech
+    // app.get("/tech/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   const qurry = { _id: new ObjectId(id) };
+    //   const result = await techCollection.findOne(qurry);
+    //   res.send(result);
+    // });
+    // GEt a specific id* for tech
+    app.get("/update/:id", async (req, res) => {
       const id = req.params.id;
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Invalid ObjectId format" });
+      }
       const qurry = { _id: new ObjectId(id) };
       const result = await techCollection.findOne(qurry);
       res.send(result);
